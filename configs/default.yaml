@@ -1,0 +1,36 @@
+# Default Configuration
+# Defines project-wide settings including model names, data paths, and evaluation parameters.
+
+model_configs:
+  llama_base: "meta-llama/Llama-3.1-8B"
+  qwen_base: "Qwen/Qwen2.5-14B"
+  encoder_roberta: "roberta-base"
+  encoder_deberta: "microsoft/deberta-v3-base"
+
+data:
+  dataset_name: "azhx/counterfact" # Changed from NeelNanda
+  train_split: "train"
+  test_split: "test" # Using part of counterfact as test
+  max_samples: 1000 # Set to None for full dataset
+
+method1:
+  name: "Linear Probing"
+  target_layers: [8, 9, 10, 11, 12, 13, 14, 15, 16] # typical range for 8B mode
+  batch_size: 16
+  max_iter: 1000 # for Logistic Regression
+
+method2:
+  name: "Encoder Fine-Tuning NLI"
+  batch_size: 32
+  learning_rate: 2e-5
+  epochs: 3
+  max_length: 512
+
+method3:
+  name: "Logit-Based Prompting"
+  prompt_template: "Context: {context}\\nNew Fact: {new_fact}\\nQuestion: Does this new fact conflict with your internal knowledge? Answer Yes or No.\\nAnswer:"
+  threshold: 0.5 # Decision boundary for prob(Yes)
+
+output:
+  results_dir: "results/"
+  save_model_weights: false

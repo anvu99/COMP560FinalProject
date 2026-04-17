@@ -1,0 +1,8 @@
+transformers
+datasets
+accelerate
+vllm
+scikit-learn
+pyyaml
+numpy
+pandas
